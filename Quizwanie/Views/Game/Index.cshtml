@@ -1,0 +1,37 @@
+﻿@model Quizwanie.Models.ShuffledQuestion
+@{
+    ViewBag.Title = "Gra";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    if (!Model.IsEndOfGame)
+    {
+        <div class="form-horizontal">
+            <h2>@Model.Content</h2>
+            <hr />
+            <div class="form-group">
+                <ul class="btn-group">
+                    @foreach (var answer in Model.Answers)
+                    {
+                        <li><input type="submit" class="btn btn-primary" name="answer" value="@answer" /></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Liczba poprawnych odpowiedzi: @Model.CorrectAnswers</p>
+        <div>
+            @Html.ActionLink("Powrót", "Index", "Home")
+        </div>
+    }
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
